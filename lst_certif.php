@@ -24,6 +24,7 @@
 
 require_once(dirname(__FILE__) . '/../../../config.php');
 require_once($CFG->libdir.'/tablelib.php');
+require_once(dirname(__FILE__) . '/locallib.php');
 
 define('DEFAULT_PAGE_SIZE', 10);
 
@@ -121,40 +122,7 @@ $matchcount = $DB->count_records_sql($req, array($launchid));
 
 echo $OUTPUT->heading(get_string('nbcertif', 'tool_history_attestoodle', $matchcount));
 // Per page.
-echo $OUTPUT->box_start('generalbox mdl-align');
-echo '<form id="chxnbp">';
-echo '<label for="idnbperpage">'. get_string('perpage') .' : </label>';
-echo '<select name="nbpp" id="idnbperpage" onchange="changeperpage(this)">';
-
-if ($perpage == 10) {
-    echo '<option value="10" selected>10</option>';
-} else {
-    echo '<option value="10">10</option>';
-}
-if ($perpage == 50) {
-    echo '<option value="50" selected>50</option>';
-} else {
-    echo '<option value="50">50</option>';
-}
-if ($perpage == 100) {
-    echo '<option value="100" selected>100</option>';
-} else {
-    echo '<option value="100">100</option>';
-}
-if ($perpage == 500) {
-    echo '<option value="500" selected>500</option>';
-} else {
-    echo '<option value="500">500</option>';
-}
-if ($perpage == 1000) {
-    echo '<option value="1000" selected>1000</option>';
-} else {
-    echo '<option value="1000">1000</option>';
-}
-echo '</select>';
-echo '</form>';
-echo $OUTPUT->box_end();
-
+echo choiceperpage($OUTPUT, $perpage);
 
 // Table.
 $baseurl = new moodle_url('/admin/tool/history_attestoodle/lst_certif.php',
@@ -283,32 +251,3 @@ echo '<script language="javascript">function changeperpage(choix) {
 }</script>';
 
 echo $OUTPUT->footer();
-
-function deletecertif($userid, $certifid) {
-    global $DB;
-    // Delete generate file.
-    $sql = "SELECT distinct filename, learnerid
-              FROM {tool_attestoodle_certif_log}
-             where id = :certifid";
-    $result = $DB->get_record_sql($sql, ['certifid' => $certifid]);
-    $fs = get_file_storage();
-    $fileinfo = array(
-                'contextid' => $userid,
-                'component' => 'tool_attestoodle',
-                'filearea' => 'certificates',
-                'filepath' => '/',
-                'itemid' => 0,
-                'filename' => $result->filename
-            );
-    $file = $fs->get_file($fileinfo['contextid'], $fileinfo['component'], $fileinfo['filearea'],
-                $fileinfo['itemid'], $fileinfo['filepath'], $fileinfo['filename']);
-    if ($file) {
-        $file->delete();
-    }
-
-    // Delete log.
-    $sql = "DELETE from {tool_attestoodle_value_log}
-             WHERE certificateid = :certifid";
-    $DB->execute($sql, ['certifid' => $certifid]);
-    $DB->delete_records('tool_attestoodle_certif_log', array('id' => $certifid));
-}

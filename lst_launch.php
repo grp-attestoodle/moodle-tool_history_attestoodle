@@ -24,7 +24,7 @@
 
 require_once(dirname(__FILE__) . '/../../../config.php');
 require_once($CFG->libdir.'/tablelib.php');
-
+require_once(dirname(__FILE__) . '/locallib.php');
 define('DEFAULT_PAGE_SIZE', 10);
 
 $context = context_system::instance();
@@ -40,8 +40,8 @@ $delete = optional_param('delete', 0, PARAM_INT);
 $action    = optional_param('action', '', PARAM_ALPHA);
 
 if ($delete != 0 && $delete == $launchid) {
-    deletecertif($launchid);
-    // Test si num page ok.
+    deleteallcertif($launchid);
+    // Test if num page ok.
     if ($page > 0) {
         $req = 'select count(id) from {tool_attestoodle_launch_log}';
         $matchcount = $DB->count_records_sql($req);
@@ -55,7 +55,7 @@ if ($delete != 0 && $delete == $launchid) {
 }
 
 if ($delete == -1) {
-    // Le retour avec delete = launchid (supprimer une génération).
+    // Confirm delete launch ?
     echo $OUTPUT->header();
     echo $OUTPUT->heading(get_string('deleteallcertif' , 'tool_history_attestoodle'));
     $optionsyes = array('delete' => $launchid, 'launchid' => $launchid, 'sesskey' => sesskey());
@@ -99,40 +99,7 @@ $matchcount = $DB->count_records_sql($req);
 
 echo $OUTPUT->heading(get_string('nblaunch', 'tool_history_attestoodle', $matchcount));
 // Per page.
-echo $OUTPUT->box_start('generalbox mdl-align');
-
-echo '<form id="chxnbp">';
-echo '<label for="idnbperpage">'. get_string('perpage') .' : </label>';
-echo '<select name="nbpp" id="idnbperpage" onchange="changeperpage(this)">';
-
-if ($perpage == 10) {
-    echo '<option value="10" selected>10</option>';
-} else {
-    echo '<option value="10">10</option>';
-}
-if ($perpage == 50) {
-    echo '<option value="50" selected>50</option>';
-} else {
-    echo '<option value="50">50</option>';
-}
-if ($perpage == 100) {
-    echo '<option value="100" selected>100</option>';
-} else {
-    echo '<option value="100">100</option>';
-}
-if ($perpage == 500) {
-    echo '<option value="500" selected>500</option>';
-} else {
-    echo '<option value="500">500</option>';
-}
-if ($perpage == 1000) {
-    echo '<option value="1000" selected>1000</option>';
-} else {
-    echo '<option value="1000">1000</option>';
-}
-echo '</select>';
-echo '</form>';
-echo $OUTPUT->box_end();
+echo choiceperpage($OUTPUT, $perpage);
 
 // Table.
 $baseurl = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php', array('page' => $page, 'perpage' => $perpage));
@@ -170,7 +137,7 @@ $table->pagesize($perpage, $matchcount);
 $order = " order by " . $table->get_sql_sort();
 
 if ($action == 'purger') {
-    if (handle_actions($launchid, $page, $perpage, $order)) {
+    if (delete_launch($launchid, $page, $perpage, $order)) {
         $table->currpage = 0;
     }
 }
@@ -285,67 +252,3 @@ echo '<script language="javascript">function changeperpage(choix) {
 }</script>';
 
 echo $OUTPUT->footer();
-
-function deletecertif($launchid) {
-    global $DB;
-    // Delete generate files.
-    $sql = "SELECT distinct filename, learnerid
-              FROM {tool_attestoodle_certif_log}
-             where launchid = :launchid";
-    $result = $DB->get_records_sql($sql, ['launchid' => $launchid]);
-    $fs = get_file_storage();
-    foreach ($result as $record) {
-        $fileinfo = array(
-                'contextid' => $record->learnerid,
-                'component' => 'tool_attestoodle',
-                'filearea' => 'certificates',
-                'filepath' => '/',
-                'itemid' => 0,
-                'filename' => $record->filename
-            );
-        $file = $fs->get_file($fileinfo['contextid'], $fileinfo['component'], $fileinfo['filearea'],
-                $fileinfo['itemid'], $fileinfo['filepath'], $fileinfo['filename']);
-        if ($file) {
-                $file->delete();
-        }
-    }
-
-    // Delete log.
-    $DB->delete_records('tool_attestoodle_launch_log', array('id' => $launchid));
-    $sql = "DELETE from {tool_attestoodle_value_log}
-             WHERE certificateid IN (SELECT id
-                                FROM {tool_attestoodle_certif_log}
-                               WHERE launchid = :launchid)";
-    $DB->execute($sql, ['launchid' => $launchid]);
-    $DB->delete_records('tool_attestoodle_certif_log', array('launchid' => $launchid));
-}
-
-function handle_actions($launchid, $page, $perpage, $order) {
-    global $DB;
-    $cpt = 0;
-    $req = 'select * from {tool_attestoodle_launch_log} ' . $order;
-    $rs = $DB->get_recordset_sql($req, array(), $page * $perpage, $perpage);
-
-    $idin = "";
-    foreach ($rs as $result) {
-        $rqtraining = 'select distinct(trainingid) as trainingid from {tool_attestoodle_certif_log} where launchid =?';
-        $record = $DB->get_recordset_sql($rqtraining, array($result->id));
-        $trainingid = -1;
-        foreach ($record as $inf) {
-            $trainingid = $inf->trainingid;
-        }
-        if ($trainingid == -1) {
-            $idin .= $result->id . ",";
-            $cpt++;
-        }
-    }
-
-    if ($cpt > 0) {
-        $req = 'delete from {tool_attestoodle_launch_log} where id in ( '. substr($idin, 0, -1) .')';
-        $DB->execute($req);
-    }
-    if ($cpt == $perpage) { // Si on supprime toute la page.
-        return true;
-    } // Sinon return false.
-    return false;
-}
