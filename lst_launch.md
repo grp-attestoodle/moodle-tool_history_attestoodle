@@ -6,3 +6,11 @@ On accède à la gestion des historiques à partir de l'écran "Profil"
 
 ## Liste des lancements ##
 
+![launch_histo](https://user-images.githubusercontent.com/64774219/108363886-b6a31780-71f5-11eb-98ef-0f065fbdf382.png)
+
+Il vous est possible de changer le nombre d'élément à afficher par page.  
+
+En fin de ligne l'icône de la poubelle vous permet de supprimer un lancement et l'icône de l'oeil permet de consulter les attestations généré par le lancement.  
+
+Lorsqu'au moins un lancement ne possède aucune attestation généré, le bouton  \[Purger la page] apparait en fin de page. Celui-ci permet de supprimer l'ensemble des lancement sans attestation de la page actuelle.  
+
