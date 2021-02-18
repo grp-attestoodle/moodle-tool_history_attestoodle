@@ -46,6 +46,31 @@ $certifid = optional_param('cid', 0, PARAM_INT);
 $userid = optional_param('userid', 0, PARAM_INT);
 $delete = optional_param('delete', 0, PARAM_INT);
 
+// Navbar.
+$titlepage = get_string('certificatfor', 'tool_history_attestoodle', $launchlabel);
+$PAGE->navbar->ignore_active();
+
+$navhome = get_string('myhome');
+$urlhome = new moodle_url('/my', array());
+$PAGE->navbar->add($navhome, $urlhome, array());
+
+$navprofil = get_string('profile');
+$urlprofil = new moodle_url('/user/profile.php', array('id' => $USER->id));
+$PAGE->navbar->add($navprofil, $urlprofil, array());
+
+$navlevel = get_string('history' , 'tool_history_attestoodle');
+$urlhisto = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php', array('page' => $ppage, 'perpage' => $pperpage));
+$PAGE->navbar->add($navlevel, $urlhisto, array());
+
+$navlevel2 = get_string('certificats', 'tool_history_attestoodle');
+$url2 = new moodle_url('/admin/tool/history_attestoodle/lst_certif.php',
+           array('launchid' => $launchid, 'ppage' => $ppage, 'pperpage' => $pperpage, 'launchlabel' => $launchlabel));
+$PAGE->navbar->add($navlevel2, $url2, array());
+
+$PAGE->set_url($url2);
+$PAGE->set_title($titlepage);
+$PAGE->set_heading($titlepage);
+
 if ($delete != 0 && $delete == $userid) { // Deleted confirmed.
     deletecertif($userid, $certifid);
     // Test si num page ok.
@@ -89,31 +114,6 @@ if ($delete == -1) {
     echo $OUTPUT->footer();
     die;
 }
-
-// Navbar.
-$titlepage = get_string('certificatfor', 'tool_history_attestoodle', $launchlabel);
-$PAGE->navbar->ignore_active();
-
-$navhome = get_string('myhome');
-$urlhome = new moodle_url('/my', array());
-$PAGE->navbar->add($navhome, $urlhome, array());
-
-$navprofil = get_string('profile');
-$urlprofil = new moodle_url('/user/profile.php', array('id' => $USER->id));
-$PAGE->navbar->add($navprofil, $urlprofil, array());
-
-$navlevel = get_string('history' , 'tool_history_attestoodle');
-$urlhisto = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php', array('page' => $ppage, 'perpage' => $pperpage));
-$PAGE->navbar->add($navlevel, $urlhisto, array());
-
-$navlevel2 = get_string('certificats', 'tool_history_attestoodle');
-$url2 = new moodle_url('/admin/tool/history_attestoodle/lst_certif.php',
-           array('launchid' => $launchid, 'ppage' => $ppage, 'pperpage' => $pperpage, 'launchlabel' => $launchlabel));
-$PAGE->navbar->add($navlevel2, $url2, array());
-
-$PAGE->set_url($url2);
-$PAGE->set_title($titlepage);
-$PAGE->set_heading($titlepage);
 
 echo $OUTPUT->header();
 

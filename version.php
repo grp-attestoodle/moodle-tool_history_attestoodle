@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_history_attestoodle';
 $plugin->release = '0.1.0';
-$plugin->version = 2021021801;
+$plugin->version = 2021021803;
 $plugin->requires = 2017051500;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->dependencies = [

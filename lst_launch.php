@@ -39,6 +39,26 @@ $launchid = optional_param('launchid', 0, PARAM_INT);
 $delete = optional_param('delete', 0, PARAM_INT);
 $action    = optional_param('action', '', PARAM_ALPHA);
 
+// Navbar.
+$PAGE->navbar->ignore_active();
+$titlepage = get_string('historyTitle' , 'tool_history_attestoodle');
+
+$navhome = get_string('myhome');
+$urlhome = new moodle_url('/my', array());
+$PAGE->navbar->add($navhome, $urlhome, array());
+
+$navprofil = get_string('profile');
+$urlprofil = new moodle_url('/user/profile.php', array('id' => $USER->id));
+$PAGE->navbar->add($navprofil, $urlprofil, array());
+
+$navlevel = get_string('history' , 'tool_history_attestoodle');
+$url = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php', array());
+$PAGE->navbar->add($navlevel, $url, array());
+
+$PAGE->set_url($url);
+$PAGE->set_title($titlepage);
+$PAGE->set_heading($titlepage);
+
 if ($delete != 0 && $delete == $launchid) {
     deleteallcertif($launchid);
     // Test if num page ok.
@@ -71,26 +91,6 @@ if ($delete == -1) {
     echo $OUTPUT->footer();
     die;
 }
-
-// Navbar.
-$PAGE->navbar->ignore_active();
-$titlepage = get_string('historyTitle' , 'tool_history_attestoodle');
-
-$navhome = get_string('myhome');
-$urlhome = new moodle_url('/my', array());
-$PAGE->navbar->add($navhome, $urlhome, array());
-
-$navprofil = get_string('profile');
-$urlprofil = new moodle_url('/user/profile.php', array('id' => $USER->id));
-$PAGE->navbar->add($navprofil, $urlprofil, array());
-
-$navlevel = get_string('history' , 'tool_history_attestoodle');
-$url = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php', array());
-$PAGE->navbar->add($navlevel, $url, array());
-
-$PAGE->set_url($url);
-$PAGE->set_title($titlepage);
-$PAGE->set_heading($titlepage);
 
 echo $OUTPUT->header();
 
