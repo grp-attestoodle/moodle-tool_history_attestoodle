@@ -24,7 +24,16 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-function delete_launch($launchid, $page, $perpage, $order) {
+/**
+ * Purges the page by deleting training launches that no longer exist.
+ *
+ * @param int $page the page to be purged.
+ * @param int $perpage the number of items per page.
+ * @param string $order the sorting order applied.
+ *
+ * @return bool true if the complete page is deleted, false in other cases.
+ */
+function delete_launch($page, $perpage, $order) {
     global $DB;
     $cpt = 0;
     $req = 'select * from {tool_attestoodle_launch_log} ' . $order;
@@ -48,12 +57,21 @@ function delete_launch($launchid, $page, $perpage, $order) {
         $req = 'delete from {tool_attestoodle_launch_log} where id in ( '. substr($idin, 0, -1) .')';
         $DB->execute($req);
     }
-    if ($cpt == $perpage) { // Si on supprime toute la page.
+    if ($cpt == $perpage) {
         return true;
-    } // Sinon return false.
+    }
     return false;
 }
 
+/**
+ * Builds the HTML structure for changing the number of items to be displayed per page.
+ * All possible choices 10, 50, 100, 500, 1000.
+ *
+ * @param object $OUTPUT the output associated with the page.
+ * @param int $perpage the number of items per page.
+ *
+ * @return string the chain carrying the structure of choice.
+ */
 function choiceperpage($OUTPUT, $perpage) {
     $ret = $OUTPUT->box_start('generalbox mdl-align');
     $ret .= '<form id="chxnbp">';
@@ -90,6 +108,11 @@ function choiceperpage($OUTPUT, $perpage) {
     return $ret;
 }
 
+/**
+ * Eliminates the need to launch a generation of certificates and the certificates issued from this generation.
+ *
+ * @param int $launchid the technical identifier of the launch to be deleted.
+ */
 function deleteallcertif($launchid) {
     global $DB;
     // Delete generate files.
@@ -124,6 +147,12 @@ function deleteallcertif($launchid) {
     $DB->delete_records('tool_attestoodle_certif_log', array('launchid' => $launchid));
 }
 
+/**
+ * Deletes a certificate and all its attributes.
+ *
+ * @param int $userid the technical identifier of the learner concerned by the certificate.
+ * @param int $certifid the technical identifier of the certificate to be deleted.
+ */
 function deletecertif($userid, $certifid) {
     global $DB;
     // Delete generate file.

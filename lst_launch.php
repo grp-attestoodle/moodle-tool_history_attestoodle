@@ -137,7 +137,7 @@ $table->pagesize($perpage, $matchcount);
 $order = " order by " . $table->get_sql_sort();
 
 if ($action == 'purger') {
-    if (delete_launch($launchid, $page, $perpage, $order)) {
+    if (delete_launch($page, $perpage, $order)) {
         $table->currpage = 0;
     }
 }
