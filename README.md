@@ -1,12 +1,12 @@
 # Attestoodle certificate history #
 
-TODO Describe the plugin shortly here.
+Backup tool for Attestoodle
 
-TODO Provide more detailed description here.
+See doc :  https://grp-attestoodle.github.io/moodle-tool_history_attestoodle/ 
 
 ## License ##
 
-marc.leconte@univ-lemans.fr
+2021 Universite du Mans
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
