@@ -1,6 +1,6 @@
 # Attestoodle certificate history #
 
-Backup tool for Attestoodle
+Attestoodle history management
 
 See doc :  https://grp-attestoodle.github.io/moodle-tool_history_attestoodle/ 
 
