@@ -10,9 +10,9 @@ On accède à la gestion des historiques à partir de l'écran "Profil"
 
 Il vous est possible de changer le nombre d'élément à afficher par page.  
 
-En fin de ligne l'icône de la poubelle vous permet de supprimer un lancement et l'icône de l'oeil permet de consulter les attestations généré par le lancement.  
+En fin de ligne l'icône de la corbeille vous permet de supprimer un lancement et l'icône de l'oeil permet de consulter les attestations générées par le lancement.  
 
-Lorsqu'au moins un lancement ne possède aucune attestation généré, le bouton  \[Purger la page] apparait en fin de page. Celui-ci permet de supprimer l'ensemble des lancement sans attestation de la page actuelle.  
+Lorsqu'au moins un lancement ne possède aucune attestation généré, le bouton  \[Purger la page] apparaît en fin de page. Celui-ci permet de supprimer l'ensemble des lancement sans attestation présent dans la page.  
 
 Chaque titre de colonne en bleue permet de changer, par un clic, l'ordre de tri de la liste.
 
