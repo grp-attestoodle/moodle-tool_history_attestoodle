@@ -1,3 +1,5 @@
+[Retour](index.md)
+
 ## Accès à la gestion des historiques Attestoodle ##
 
 On accède à la gestion des historiques à partir de l'écran "Profil"
@@ -16,3 +18,4 @@ Lorsqu'au moins un lancement ne possède aucune attestation généré, le bouton
 
 Chaque titre de colonne en bleue permet de changer, par un clic, l'ordre de tri de la liste.
 
+[Retour](index.md)
