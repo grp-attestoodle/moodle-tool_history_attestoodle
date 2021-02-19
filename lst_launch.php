@@ -91,12 +91,11 @@ if ($delete == -1) {
     die;
 }
 
+$matchcount = $DB->count_records('tool_attestoodle_launch_log');
+
 if ($action == '') {
     echo $OUTPUT->header();
-
-    $matchcount = $DB->count_records('tool_attestoodle_launch_log');
     echo $OUTPUT->heading(get_string('nblaunch', 'tool_history_attestoodle', $matchcount));
-
     // Per page.
     echo choiceperpage($OUTPUT, $perpage);
 }
