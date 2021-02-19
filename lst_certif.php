@@ -74,9 +74,14 @@ $PAGE->set_heading($titlepage);
 if ($delete != 0 && $delete == $userid) { // Deleted confirmed.
     deletecertif($userid, $certifid);
     // Test si num page ok.
+    $req = 'select count(id) from {tool_attestoodle_certif_log} where launchid = ?';
+    $matchcount = $DB->count_records_sql($req, array($launchid));
+    if ($matchcount == 0) {
+        redirect($urlhisto);
+        die;
+    }
+
     if ($page > 0) {
-        $req = 'select count(id) from {tool_attestoodle_certif_log} where launchid = ?';
-        $matchcount = $DB->count_records_sql($req, array($launchid));
         if (($matchcount / $perpage) - 1 <= $page) {
             $redirecturl = new moodle_url('/admin/tool/history_attestoodle/lst_certif.php',
                                         array('page' => $page - 1, 'perpage' => $perpage,

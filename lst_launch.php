@@ -63,8 +63,7 @@ if ($delete != 0 && $delete == $launchid) {
     deleteallcertif($launchid);
     // Test if num page ok.
     if ($page > 0) {
-        $req = 'select count(id) from {tool_attestoodle_launch_log}';
-        $matchcount = $DB->count_records_sql($req);
+        $matchcount = $DB->count_records('tool_attestoodle_launch_log');
         if (($matchcount / $perpage) - 1 <= $page) {
             $redirecturl = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php',
                                         array('page' => $page - 1, 'perpage' => $perpage));
@@ -92,14 +91,15 @@ if ($delete == -1) {
     die;
 }
 
-echo $OUTPUT->header();
+if ($action == '') {
+    echo $OUTPUT->header();
 
-$req = 'select count(id) from {tool_attestoodle_launch_log}';
-$matchcount = $DB->count_records_sql($req);
+    $matchcount = $DB->count_records('tool_attestoodle_launch_log');
+    echo $OUTPUT->heading(get_string('nblaunch', 'tool_history_attestoodle', $matchcount));
 
-echo $OUTPUT->heading(get_string('nblaunch', 'tool_history_attestoodle', $matchcount));
-// Per page.
-echo choiceperpage($OUTPUT, $perpage);
+    // Per page.
+    echo choiceperpage($OUTPUT, $perpage);
+}
 
 // Table.
 $baseurl = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php', array('page' => $page, 'perpage' => $perpage));
@@ -138,8 +138,12 @@ $order = " order by " . $table->get_sql_sort();
 
 if ($action == 'purger') {
     if (delete_launch($page, $perpage, $order)) {
-        $table->currpage = 0;
+        $page = 0;
     }
+    $redirecturl = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php',
+                                        array('page' => $page, 'perpage' => $perpage));
+    redirect($redirecturl);
+    die();
 }
 
 $req = 'select * from {tool_attestoodle_launch_log} ' . $order;
