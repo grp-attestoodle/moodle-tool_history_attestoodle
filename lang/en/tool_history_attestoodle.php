@@ -51,5 +51,6 @@ $string['confirmdeleteonecertif'] = 'Do you really want to delete the {$a->begin
 $string['confirmdeletecertif'] = 'Do you really want to remove the {$a->user} certificate for {$a->training} ?';
 $string['certificatfor'] = 'Certificates for {$a}';
 $string['certificats'] = 'Certificates';
+$string['privacy:metadata'] = 'Attestoodle\'s history management plugin does not record any personal data.';
 
 
