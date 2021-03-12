@@ -52,4 +52,14 @@ $string['confirmdeletecertif'] = 'Souhaitez-vous réellement supprimer l\'attest
 $string['certificatfor'] = 'Attestations pour {$a}';
 $string['certificats'] = 'Attestations';
 $string['privacy:metadata'] = 'Le plugin de gestion des historiques d\'Attestoodle n\'enregistre aucune donnée personnelle.';
+$string['errornocriteria'] = 'Vous devez renseigner l\'un des critères de recherche !';
+$string['errornotmail'] = 'Aucun étudiant ne correspond à cette adresse mail !';
+$string['errornocertificat'] = 'Aucune attestation ne concerne cet étudiant ! (id={$a})';
+
+$string['learnersearch'] = 'Recherche par étudiant';
+$string['newsearch'] = 'Nouvelle recherche';
+$string['studentcertificats'] = 'Attestations d\'un apprenant';
+$string['studentcriteria'] = 'Critères pour la recherche de l\'étudiant';
+$string['titleliststudent'] = 'Liste des {$a->nb} attestations(s) de {$a->lastname} {$a->firstname}';
+$string['timecreatedformat'] = 'd/m/Y H:i:s';
 

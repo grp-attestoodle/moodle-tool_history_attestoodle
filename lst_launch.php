@@ -238,16 +238,21 @@ $parameters['action'] = 'cancel';
 $label = get_string('cancel');
 $btncancel = \html_writer::link($urlprofil, $label, $attributes);
 
+$urlsearch = new \moodle_url('/admin/tool/history_attestoodle/learner_certif.php', $parameters);
+$labelsearch = get_string('learnersearch', 'tool_history_attestoodle');
+$btnsearch = \html_writer::link($urlsearch, $labelsearch, $attributes);
+
 echo "<br/><br/>";
 if ($haserror) {
     echo $btnok. "&nbsp;&nbsp;";
 }
-echo $btncancel;
+echo $btncancel . "&nbsp;&nbsp;";
+echo $btnsearch;
 
 $urlchg = new moodle_url('/admin/tool/history_attestoodle/lst_launch.php',
            array('launchid' => $launchid,
                 'order' => $order,
-                'page' => $page));
+                'page' => 0));
 
 echo '<script language="javascript">function changeperpage(choix) {
     var value = "'. $urlchg->out() .'&perpage=" + choix.value;

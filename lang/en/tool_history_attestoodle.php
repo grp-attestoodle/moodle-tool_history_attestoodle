@@ -52,5 +52,13 @@ $string['confirmdeletecertif'] = 'Do you really want to remove the {$a->user} ce
 $string['certificatfor'] = 'Certificates for {$a}';
 $string['certificats'] = 'Certificates';
 $string['privacy:metadata'] = 'Attestoodle\'s history management plugin does not record any personal data.';
+$string['errornocriteria'] = 'You have to fill in one of the search criteria !';
+$string['errornotmail'] = 'No student corresponds to this email address !';
+$string['errornocertificat'] = 'There is no certificate for this student ! (id={$a})';
 
-
+$string['learnersearch'] = 'Search by student';
+$string['newsearch'] = 'New search';
+$string['studentcertificats'] = 'Certificates from a student';
+$string['studentcriteria'] = 'Criteria for the student\'s research';
+$string['titleliststudent'] = 'List of the {$a->nb} certificates of {$a->firstname} {$a->lastname}';
+$string['timecreatedformat'] = 'Y-m-d H:i:s';
