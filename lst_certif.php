@@ -248,7 +248,7 @@ echo "<br/><br/>" . $btncancel;
 $urlchg = new moodle_url('/admin/tool/history_attestoodle/lst_certif.php',
            array('launchid' => $launchid,
                 'ppage' => $ppage, 'pperpage' => $pperpage, 'launchlabel' => $launchlabel,
-                'page' => 0);
+                'page' => 0));
 
 echo '<script language="javascript">function changeperpage(choix) {
     var value = "'. htmlspecialchars_decode($urlchg->out()) .'&perpage=" + choix.value;
