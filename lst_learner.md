@@ -15,3 +15,9 @@ On arrive sur une page dont l'adresse correspond à nom_serveur/user/view.php?id
 Ici l'identifiant 58 est associé à l'utilisateur choisi.
 
 Si le critère correspond à un étudiant pour lequel au moins une attestation existe, la liste de ces attestations sera affichée.  
+
+![lst_per_learner](https://user-images.githubusercontent.com/64774219/116051286-b3eef380-a678-11eb-8995-bccfd3db581f.png)  
+
+Vous pouvez télécharger une attestation, ou supprimer une attestation en cliquant sur l'icone corbeille en fin de ligne.
+
+
