@@ -1,3 +1,7 @@
+[Retour](index.md)
+
+## Liste des attestations d'un étudiant ##
+
 Il est désormais possible de réaliser une recherche par étudiant, pour cela cliquer sur bouton [Recherche par étudiant] en fin de la page de 
 l'**Historique des générations d'attestation**  
   
@@ -21,3 +25,4 @@ Si le critère correspond à un étudiant pour lequel au moins une attestation e
 Vous pouvez télécharger une attestation, ou supprimer une attestation en cliquant sur l'icone corbeille en fin de ligne.
 
 
+[Retour](index.md)
