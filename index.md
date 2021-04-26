@@ -4,4 +4,6 @@
 
 ## [Liste des attestations d'une génération](lst_certif.md)
 
+## [Liste des attestations d'un étudiant](lst_learner.md)
+
 ## [Qualité du code](qualite.md)
